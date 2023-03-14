@@ -16,7 +16,7 @@ class Login extends Component {
   }
 
   async fetchCreateUser() {
-    const { userName, loading} = this.state;
+    const { userName, loading } = this.state;
     this.setState({
       loading: true,
     });
