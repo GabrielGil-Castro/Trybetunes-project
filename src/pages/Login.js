@@ -6,7 +6,6 @@ class Login extends Component {
   state = {
     userName: '',
     loading: false,
-    redirect: false,
   };
 
   handleChange({ target }) {
@@ -17,7 +16,7 @@ class Login extends Component {
   }
 
   async fetchCreateUser() {
-    const { userName, loading, redirect } = this.state;
+    const { userName, loading} = this.state;
     this.setState({
       loading: true,
     });
@@ -25,16 +24,15 @@ class Login extends Component {
     if (data === 'OK') {
       this.setState({
         loading: false,
-        redirect: true,
       });
     }
-    if (redirect) return <Redirect to="/search" />;
     if (loading) return <Loading />;
   }
 
   render() {
     const { userName } = this.state;
-    const number = 3;
+    const maxLength = 3;
+    const isBtnVallid = userName > maxLength;
     return (
       <div data-testid="page-login">
         <p>Login</p>
@@ -52,7 +50,7 @@ class Login extends Component {
             />
           </label>
           <button
-            disabled={ userName.length < number }
+            disabled={ !isBtnVallid }
             onClick={ () => this.fetchCreateUser() }
             type="button"
             data-testid="login-submit-button"
