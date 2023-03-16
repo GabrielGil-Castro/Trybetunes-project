@@ -8,14 +8,14 @@ class Login extends Component {
     loading: false,
   };
 
-  handleChange({ target }) {
+  handleChange = ({ target }) => {
     const { userName, value } = target;
     this.setState({
       [userName]: value,
     });
-  }
+  };
 
-  async fetchCreateUser() {
+  fetchCreateUser = async () => {
     const { userName, loading } = this.state;
     this.setState({
       loading: true,
@@ -27,7 +27,7 @@ class Login extends Component {
       });
     }
     if (loading) return <Loading />;
-  }
+  };
 
   render() {
     const { userName } = this.state;
