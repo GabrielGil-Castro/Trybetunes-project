@@ -11,6 +11,7 @@ class Search extends Component {
     artist: '',
     albuns: [],
     loading: false,
+    newArtist: '',
   };
 
   handleChange = ({ target: { name, value } }) => {
@@ -23,6 +24,7 @@ class Search extends Component {
     const { artist } = this.state;
     this.setState({
       loading: true,
+      newArtist: artist,
     });
     const arrAlbum = await searchAlbumsAPI(artist);
     this.setState({
@@ -30,12 +32,12 @@ class Search extends Component {
       albuns: arrAlbum,
       loading: false,
     });
+    console.log(arrAlbum);
   };
 
   render() {
-    const { artist, loading, albuns } = this.state;
+    const { artist, loading, albuns, newArtist } = this.state;
     const isValid = artist.length >= minLength;
-
     return (
       <div data-testid="page-search">
         <Header />
@@ -51,6 +53,7 @@ class Search extends Component {
             />
           </label>
           <button
+            type="button"
             data-testid="search-artist-button"
             disabled={ !isValid }
             onClick={ this.fetchSearchAPI }
@@ -62,25 +65,26 @@ class Search extends Component {
         <p>
           Resultado de álbuns de:
           {' '}
-          {artist}
+          {newArtist}
         </p>
         {albuns.length > 0
-          ? <section>
-            {
-              albuns.map((album) => (
-                <div key={ album.colletionid }>
-                  <Link
-                    to={ `/album/${album.colletionId}` }
-                    key={ album.colletionid }
-                    data-testid={ `link-to-album-${collectionId}` }
-                  >
-                    <img src={ album.artworkUrl100 } alt={ album.collectionId } />
-
-                  </Link>
-                </div>
-              ))
-            }
-          </section>
+          ? (
+            <div>
+              {
+                albuns.map((album) => (
+                  <div key={ album.collectionId }>
+                    <Link
+                      to={ `/album/${album.collectionId}` }
+                      key={ album.collectionId }
+                      data-testid={ `link-to-album-${album.collectionId}` }
+                    >
+                      <p>{album.collectionName}</p>
+                      <img src={ album.artworkUrl100 } alt={ album.collectionId } />
+                    </Link>
+                  </div>
+                ))
+              }
+            </div>)
           : <p>Nenhum álbum foi encontrado</p>}
       </div>
     );

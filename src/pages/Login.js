@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
 import Loading from './Loading';
 
@@ -6,17 +7,18 @@ class Login extends Component {
   state = {
     userName: '',
     loading: false,
+    data: '',
   };
 
   handleChange = ({ target }) => {
-    const { userName, value } = target;
+    const { name, value } = target;
     this.setState({
-      [userName]: value,
+      [name]: value,
     });
   };
 
   fetchCreateUser = async () => {
-    const { userName, loading } = this.state;
+    const { userName } = this.state;
     this.setState({
       loading: true,
     });
@@ -24,15 +26,16 @@ class Login extends Component {
     if (data === 'OK') {
       this.setState({
         loading: false,
+        data,
       });
     }
-    if (loading) return <Loading />;
   };
 
   render() {
-    const { userName } = this.state;
+    const { userName, data, loading } = this.state;
+    console.log(userName);
     const maxLength = 3;
-    const isBtnVallid = userName > maxLength;
+    const isBtnVallid = userName.length >= maxLength;
     return (
       <div data-testid="page-login">
         <p>Login</p>
@@ -41,7 +44,7 @@ class Login extends Component {
             Insira seu nome aqui:
             <input
               type="text"
-              name="name"
+              name="userName"
               id="name"
               value={ userName }
               placeholder="Nome"
@@ -51,12 +54,14 @@ class Login extends Component {
           </label>
           <button
             disabled={ !isBtnVallid }
-            onClick={ () => this.fetchCreateUser() }
+            onClick={ this.fetchCreateUser }
             type="button"
             data-testid="login-submit-button"
           >
             Entrar
           </button>
+          {loading && <Loading />}
+          { data === 'OK' && <Redirect to="/search" />}
         </form>
       </div>
     );
