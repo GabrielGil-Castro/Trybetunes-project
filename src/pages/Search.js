@@ -32,7 +32,6 @@ class Search extends Component {
       albuns: arrAlbum,
       loading: false,
     });
-    console.log(arrAlbum);
   };
 
   render() {

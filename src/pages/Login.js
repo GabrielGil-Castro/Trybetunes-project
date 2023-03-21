@@ -33,7 +33,6 @@ class Login extends Component {
 
   render() {
     const { userName, data, loading } = this.state;
-    console.log(userName);
     const maxLength = 3;
     const isBtnVallid = userName.length >= maxLength;
     return (
