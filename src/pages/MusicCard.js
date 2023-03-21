@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+/* import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI'; */
 
 export default class MusicCard extends Component {
   state = {
     loading: false,
-    favoriteList: [],
   };
 
-  async componentDidMount() {
+  /*   async componentDidMount() {
     this.setState({
       loading: true,
     });
@@ -28,11 +27,11 @@ export default class MusicCard extends Component {
     this.setState({
       loading: false,
     });
-  };
+  }; */
 
   render() {
     const { music } = this.props;
-    const { loading, favoriteList } = this.state;
+    const { loading } = this.state;
     return (
       <div>
         {loading && <Loading />}
@@ -49,7 +48,7 @@ export default class MusicCard extends Component {
                 .
               </audio>
 
-              <label>
+              {/* <label>
                 Favorita
                 <input
                   name="favorite-song"
@@ -60,7 +59,7 @@ export default class MusicCard extends Component {
                     favoriteList.find((favorite) => favorite.trackId === song.trackId)
                   }
                 />
-              </label>
+              </label> */}
             </div>))
         }
       </div>
